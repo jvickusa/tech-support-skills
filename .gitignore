@@ -4,3 +4,4 @@ __pycache__/
 evidence*.json
 baseline*.md
 .playwright-cli/
+.impeccable/review/

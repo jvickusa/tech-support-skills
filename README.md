@@ -49,6 +49,12 @@ The agent asks about your symptoms, selects checks for your operating system, co
 and writes a troubleshooting report. It distinguishes observed problems from possible causes,
 including what remains unknown. You do not need coding experience to follow its guidance.
 
+Ask for **Markdown**, **HTML**, or **both**. Reports use adaptable templates; the agent chooses content
+based on your investigation. The HTML report matches the site's visual style and opens offline directly
+in a browser, without Python, Node.js or a server. Use the browser's Print / Save as PDF if needed.
+See [fictional Markdown preview](skills/internet-diagnostics/assets/report-example.md) or download and open
+the [standalone HTML preview](skills/internet-diagnostics/assets/report-example.html).
+
 ## What internet-diagnostics covers
 
 The first skill investigates local connections, Wi-Fi, name resolution (DNS), delay under load,
@@ -89,3 +95,4 @@ and scripts bundled inside each skill. The installer downloads these skill folde
 ## License
 
 [MIT](LICENSE). Each installable skill includes its license.
+Report fonts use the SIL Open Font License; notices are bundled and embedded in the standalone HTML.

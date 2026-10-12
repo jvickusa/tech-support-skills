@@ -57,3 +57,13 @@ Verify relay candidate success separately for provider-supported UDP/TCP/TLS URL
 cancellation and timeout. Then verify actual selected relay/media statistics in the affected application.
 No authenticated live relay success, actual VPN disconnection or wired/Wi-Fi A/B was performed during development.
 Those tests depend on the user's relay/network and explicit approval for connection changes.
+
+## Static report templates
+
+Standalone HTML includes embedded fonts and their license notices, no scripts or external assets.
+Template tests check those safety/packaging invariants, section anchors, and that fictional previews have
+no unresolved markers. The agent still reviews task-specific reports before delivery.
+Playwright CLI inspected the preview at 1280px desktop and 375px mobile, light/dark and print media.
+Mobile had no document overflow; the evidence table scrolls within its labeled region.
+Browser PDF generation and offline section navigation succeeded. The automation tool blocks file URLs,
+so visual inspection used localhost; the artifact itself has no server dependencies.

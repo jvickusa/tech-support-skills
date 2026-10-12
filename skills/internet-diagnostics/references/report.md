@@ -2,6 +2,31 @@
 
 Raw collector Markdown is an evidence appendix, not a diagnosis. Keep private evidence separate from redacted summary.
 
+## Output choice and templates
+
+Offer **Markdown**, **HTML**, or **both** when delivering the final report. Respect a format already requested.
+Use [Markdown template](../assets/report.md) or [HTML template](../assets/report.html) as the starting point.
+Agent decides content, section order, depth and useful evidence for the task. Add, rename or omit sections;
+do not invent readings just to fill the template. Preserve the separation between observed evidence,
+possible causes/confidence, unavailable tests, approved changes and next steps.
+
+Copy the template into the output location, replace every `{{placeholder}}`, and remove unused sections
+and navigation links. Save `.md`, `.html`, or both. HTML opens directly from disk and works offline;
+no Python, Node, local server or build needed. Browser Print / Save as PDF is available without custom controls.
+Do not create a report-building application or use collector Markdown as the finished troubleshooting report.
+
+The HTML is static: inline CSS and embedded website fonts, system light/dark theme, responsive reading,
+print styling, no JavaScript, remote assets, forms, tracking or uploads. Keep the supplied security policy.
+`*_html` blocks are agent-authored semantic markup, never raw imported HTML. Escape untrusted strings
+(`&`, `<`, `>`, quotes) before adding them as text or attribute values. Put commands/logs in escaped `pre`/`code`.
+Only author links to reviewed `https:` destinations or local section anchors; no event attributes or embedded content.
+Do not place sensitive raw evidence in the deliverable without review. No automatic upload or public link.
+If both formats are requested, keep their findings, uncertainty and recommendations consistent.
+Validate no placeholders remain and review the HTML at desktop/mobile width and in print before delivery.
+The included examples are explicitly fictional design previews, not network measurements.
+See [Markdown preview](../assets/report-example.md) and [HTML preview](../assets/report-example.html).
+Embedded fonts retain their SIL Open Font License notices in the HTML; preserve those comments in outputs.
+
 ## Human template
 
 ```text

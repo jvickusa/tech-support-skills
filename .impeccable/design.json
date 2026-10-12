@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-12T02:45:16Z",
+  "title": "Design System: Tech Support Skills Reports",
+  "extensions": {
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ],
+    "layout": {
+      "sheet": "max-width:1040px; margin:0 auto; padding:32px 40px 48px",
+      "mobileSheet": "padding:24px 20px 36px",
+      "readingMeasure": {
+        "title": "20ch",
+        "intro": "65ch",
+        "evidence": "70ch"
+      },
+      "printPageMargin": "18mm"
+    },
+    "focus": {
+      "outline": "3px solid var(--blue)",
+      "offset": "5px"
+    },
+    "elevation": "Flat; tonal grouping and thin rules; no shadows.",
+    "motion": [],
+    "theme": {
+      "screen": "System prefers-color-scheme; fixed blue conclusion retains paired foregrounds.",
+      "print": "Light paper; conclusion becomes dark text on white with horizontal rules; navigation hidden."
+    },
+    "tableBehavior": "Horizontal wrapper overflow; visible scroll guidance at mobile breakpoint; wrapper overflow visible in print.",
+    "fontDistribution": "Embedded Barlow Condensed Bold and Atkinson Hyperlegible Regular; retain bundled OFL notices."
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Inherited website identity in report reading mode",
+    "overview": "One continuous evidence-first document. Condensed headings name the investigation; readable body text separates observed evidence from qualified interpretation. Blue gives the conclusion prominence and soft tint marks next actions.",
+    "keyCharacteristics": [
+      "Single reading sheet",
+      "Qualified conclusion",
+      "Distinct evidence and interpretation",
+      "Offline typography",
+      "System theme and print"
+    ],
+    "rules": [
+      "Written labels carry evidentiary status; color supplements them.",
+      "Adapt sections to the investigation; preserve semantic distinctions.",
+      "Preserve readable evidence and limitations on mobile."
+    ],
+    "dos": [
+      "Retain font licenses and embedded assets.",
+      "Keep confidence reasons adjacent to conclusions.",
+      "Keep native links and visible keyboard focus."
+    ],
+    "donts": [
+      "Do not impose a fixed measurement schema.",
+      "Do not hide limitations or substitute zero for unknown readings.",
+      "Do not add runtime interactions or external assets."
+    ]
+  }
+}

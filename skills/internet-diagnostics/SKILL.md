@@ -55,6 +55,7 @@ baseline inspection requires no elevation.
    Retest the same workload. Restore unsuccessful experiments and verify restoration; never promise guaranteed rollback.
 8. **Report:** load [report contract](references/report.md). Include observations, hypotheses/confidence,
    comparisons, missing evidence, approved changes/results, next actions, and escalation.
+   Offer Markdown, static standalone HTML, or both using bundled templates; the agent adapts content to the task.
    Offer summary JSON when useful. Raw collector JSON is not the integration/share summary.
 
 Read [sources](references/sources.md) when command semantics/standards matter. Verify current vendor requirements
