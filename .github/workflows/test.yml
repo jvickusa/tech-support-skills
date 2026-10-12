@@ -15,6 +15,10 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests -v
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - run: node --test tests/turn-probe.test.mjs
       - name: Local baseline smoke test (discard sensitive output)
         shell: bash
-        run: python skills/internet-diagnostics/scripts/collect.py > /dev/null
+        run: python skills/internet-diagnostics/scripts/collect.py --wifi --vpn > /dev/null

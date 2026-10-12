@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 evidence*.json
 baseline*.md
+.playwright-cli/

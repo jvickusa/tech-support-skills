@@ -41,9 +41,12 @@ baseline inspection requires no elevation.
    TCP success does not prove game/media UDP health. Optional
    `scripts/collect.py --gateway <literal-IP> --target <host-or-IP> --count 20` collects bounded observations.
    JSON is default; `--format markdown` produces readable evidence. Both contain private raw output.
-5. **Investigate:** load [comparisons](references/comparisons.md) for Wi-Fi/Ethernet, idle/load, gaming,
-   streaming, or calls. Load [advanced investigations](references/advanced.md) only for selective failures,
-   VPN, address families, routing, MTU, NAT, firewall, or QoS. Keep workload, target, count, and windows comparable.
+5. **Investigate:** load [Wi-Fi](references/wifi.md) for radio/local wireless issues,
+   [VPN](references/vpn.md) for tunnel-dependent problems, or [TURN/WebRTC](references/turn.md) for media/relay failures.
+   Optional collector `--wifi`/`--vpn` profiles inspect state without changing settings.
+   Load [comparisons](references/comparisons.md) for idle/load and workload comparisons.
+   Load [advanced investigations](references/advanced.md) for address families, routing, MTU, NAT, firewall, or QoS.
+   Keep workload, target, count, and windows comparable.
 6. **Interpret:** use [evidence rules](references/evidence.md). Cite observation IDs/windows.
    State competing explanations, confidence, and the next discriminating test. Stop when evidence supports
    a safe next step; otherwise repeat bounded windows during reproduction. Mark untested variables.

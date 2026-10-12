@@ -50,6 +50,7 @@ Beginners receive one short test at a time. Advanced users can request command b
 
 ```sh
 python skills/internet-diagnostics/scripts/collect.py --dry-run
+python skills/internet-diagnostics/scripts/collect.py --wifi --vpn --dry-run
 python skills/internet-diagnostics/scripts/collect.py --format markdown > baseline.md
 python skills/internet-diagnostics/scripts/collect.py --gateway 192.168.1.1 --target example.com --count 20 > evidence.json
 ```
@@ -63,15 +64,25 @@ Shell redirection creates files: choose private storage and avoid overwriting ev
 **Output is sensitive and unredacted.** Review names, addresses, routes, and Wi-Fi details before sharing.
 Nothing uploads. Collector JSON is local evidence, not a confirmed diagnosis or public share payload.
 
+Wi-Fi and VPN have dedicated workflows and optional `--wifi`/`--vpn` inspection profiles.
+These use current/cached state without active scans, secret collection, or VPN disconnection.
+The [TURN guide](skills/internet-diagnostics/references/turn.md) includes a local browser allocation probe,
+using temporary credentials entered locally and relay-only ICE. It closes after at most 15 seconds.
+It tests allocation only; call quality/loss needs actual connected application statistics.
+No default/deprecated public relay, long-term keys, or new bandwidth/packet-loss engine.
+
 ## Development
 
 ```sh
 python -m unittest discover -s tests -v
+node --test tests/turn-probe.test.mjs
 python skills/internet-diagnostics/scripts/collect.py --dry-run --target example.com
 ```
 
 CI tests Windows, macOS, and Linux. Tests simulate missing tools, failures, partial output, invalid inputs,
-and platform plans. See [validation](docs/validation.md) for actual-host limits and manual scenarios.
+platform plans, allocation results, cancellation and timeout. Node 22+ is only needed for JS development tests;
+users need an ordinary WebRTC browser for the optional TURN probe.
+See [validation](docs/validation.md) for actual-host limits and manual scenarios.
 Optionally install upstream [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref)
 and run `skills-ref validate skills/internet-diagnostics`.
 

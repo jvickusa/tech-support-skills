@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:,">
+<title>Local TURN allocation check</title>
+<style>
+  :root { color-scheme: light dark; font: 1rem/1.5 system-ui, sans-serif; }
+  body { max-width: 42rem; margin: 3rem auto; padding: 0 1rem; }
+  label { display: block; margin-top: 1rem; }
+  input { display: block; box-sizing: border-box; width: 100%; padding: .6rem; font: inherit; }
+  button { padding: .6rem 1rem; margin: 1rem .5rem 0 0; font: inherit; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>
+<h1>TURN allocation check</h1>
+<p>Read-only browser check. Start sends an allocation request to your chosen relay for at most 15 seconds.
+  No microphone, camera, media-loss or speed measurement. A relay candidate proves allocation, not call quality.</p>
+<p>Use temporary credentials from an authorized provider. Enter them here, not in chat.
+  Fields clear on Start. Nothing is saved or uploaded. Long-term API/signing keys do not belong here.</p>
+<form id="form" autocomplete="off">
+  <label for="url">TURN URL</label>
+  <input id="url" required maxlength="512" placeholder="turn:relay.example:3478?transport=udp" spellcheck="false">
+  <label for="username">Temporary username</label>
+  <input id="username" type="password" required maxlength="1024" autocomplete="off">
+  <label for="credential">Temporary credential</label>
+  <input id="credential" type="password" required maxlength="2048" autocomplete="off">
+  <button id="start" type="submit">Start allocation check</button>
+  <button id="cancel" type="button" disabled>Cancel</button>
+</form>
+<p id="status" role="status" aria-live="polite">Not tested.</p>
+<pre id="result" aria-label="Allocation result"></pre>
+<script type="module">
+  import { configuration, probe } from './turn-probe.mjs';
+  const form = document.querySelector('#form');
+  const fields = ['url', 'username', 'credential'].map(id => document.getElementById(id));
+  const start = document.querySelector('#start'), cancel = document.querySelector('#cancel');
+  const status = document.querySelector('#status'), result = document.querySelector('#result');
+  let active;
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (active) return;
+    let config;
+    try { config = configuration(...fields.map(field => field.value)); }
+    catch (error) { status.textContent = error.message; return; }
+    for (const field of fields) { field.value = ''; field.disabled = true; }
+    start.disabled = true; cancel.disabled = false;
+    result.textContent = ''; status.textContent = 'Checking relay allocation…';
+    active = probe(config);
+    config = null;
+    const report = await active.promise;
+    active = null;
+    result.textContent = JSON.stringify(report, null, 2);
+    status.textContent = report.status === 'observed' ? 'Relay allocation observed. Media delivery not tested.'
+      : report.status === 'cancelled' ? 'Cancelled. Relay connection closed.'
+      : 'Allocation unavailable. This is not packet loss.';
+    for (const field of fields) field.disabled = false;
+    start.disabled = false; cancel.disabled = true;
+  });
+  cancel.addEventListener('click', () => active?.cancel());
+  window.addEventListener('pagehide', () => active?.cancel());
+</script>
+</html>

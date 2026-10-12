@@ -21,3 +21,8 @@ context and identifiers. Future website imports require validation and safe text
 No uploader, website engine change, backend, or share-link schema is included.
 Native tools differ by OS release, privilege and Linux distribution; feature detection and manual fallbacks
 preserve unavailable states. Additional skills should address distinct demonstrated workflows.
+
+Wi-Fi/VPN references and opt-in collector profiles add bounded state inspection without active scans
+or tunnel changes. TURN uses a local native-browser relay allocation probe, separate from application
+media statistics. It performs no throughput/loss measurement and does not replace the website engine.
+Credentials enter only the local form, remain transient, and are excluded from allowlisted results.

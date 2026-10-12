@@ -87,6 +87,22 @@ def plan(system, args):
     else:
         raise ValueError("Unsupported OS; use manual instructions for Windows, macOS, or Linux")
 
+    if args.wifi:
+        inspections += {
+            "Windows": [("wifi-association", ["netsh.exe", "wlan", "show", "interfaces"]),
+                        ("adapter-counters", powershell("Get-NetAdapterStatistics | Format-List | Out-String -Width 180"))],
+            "Darwin": [("wifi-inventory", ["system_profiler", "SPAirPortDataType"])],
+            "Linux": [("wifi-cached", ["nmcli", "-f", "IN-USE,SSID,CHAN,RATE,SIGNAL,SECURITY", "device", "wifi", "list", "--rescan", "no"]),
+                      ("wifi-interfaces", ["iw", "dev"])],
+        }[system]
+    if args.vpn:
+        inspections += {
+            "Windows": [("vpn-user", powershell("Get-VpnConnection | Select-Object Name,ConnectionStatus,TunnelType,SplitTunneling | Format-Table | Out-String -Width 180")),
+                        ("vpn-system", powershell("Get-VpnConnection -AllUserConnection | Select-Object Name,ConnectionStatus,TunnelType,SplitTunneling | Format-Table | Out-String -Width 180"))],
+            "Darwin": [("vpn-system", ["scutil", "--nc", "list"]), ("proxy", ["scutil", "--proxy"])],
+            "Linux": [("vpn-active", ["nmcli", "-f", "NAME,TYPE,DEVICE", "connection", "show", "--active"]),
+                      ("policy-v4", ["ip", "rule", "show"]), ("policy-v6", ["ip", "-6", "rule", "show"])],
+        }[system]
     commands = [(name, argv, INSPECT_TIMEOUT) for name, argv in inspections]
     for name, host in [("gateway-ping", args.gateway), ("target-ping", args.target)]:
         if host:
@@ -181,6 +197,8 @@ def parser():
     cli.add_argument("--count", type=count, default=10, help="1–60 echo probes per target (default 10)")
     cli.add_argument("--family", choices=("4", "6"), default="4", help="Target address family (default 4)")
     cli.add_argument("--trace", action="store_true", help="Add bounded 12-hop trace; requires --target")
+    cli.add_argument("--wifi", action="store_true", help="Inspect Wi-Fi association/inventory without active scans; sensitive identifiers")
+    cli.add_argument("--vpn", action="store_true", help="Inspect VPN/proxy/policy state; never disconnect or collect secrets")
     cli.add_argument("--dry-run", action="store_true", help="Print command plan without executing")
     cli.add_argument("--format", choices=("json", "markdown"), default="json")
     return cli

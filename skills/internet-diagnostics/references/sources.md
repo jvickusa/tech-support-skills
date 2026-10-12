@@ -11,6 +11,8 @@ Research reviewed 2026-10-11. Check local help/current vendor requirements when 
 - [iputils ping](https://github.com/iputils/iputils/blob/master/doc/ping.xml) and [tracepath](https://github.com/iputils/iputils/blob/master/doc/tracepath.xml): Linux semantics/PMTU.
 - [RFC 7567](https://www.rfc-editor.org/rfc/rfc7567): queueing and active queue management.
 - [RFC 1191](https://www.rfc-editor.org/rfc/rfc1191) and [RFC 8899](https://www.rfc-editor.org/rfc/rfc8899): PMTU/filtering/tunnels/black holes.
+- [W3C WebRTC](https://www.w3.org/TR/webrtc/): relay ICE policy, gathering, cleanup and media statistics.
+- [Microsoft Get-VpnConnection](https://learn.microsoft.com/en-us/powershell/module/vpnclient/get-vpnconnection): user/system profiles, not all third-party tunnels.
 - [Netflix speeds](https://help.netflix.com/en/node/306) and [Google Meet network preparation](https://support.google.com/a/answer/1279090): workload-specific requirements; verify current guidance.
 
 Foundation is supplied `docs/tech-support-research.md` in sibling website repo. Its generated citation

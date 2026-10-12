@@ -40,3 +40,20 @@ Upstream validator revision: `69ef37e9424c0a7ea9dd2293b559e43ec8176379` (isolate
 Real Windows baseline inspections returned successfully. Two-probe loopback gateway/target tests and
 system resolution returned successfully; a closed TCP 443 endpoint remained an error, with no inferred loss.
 No live public bandwidth, TURN, consumer Wi-Fi, VPN, or disruptive remediation test was performed.
+
+## Wi-Fi, VPN and TURN additions, 2026-10-11
+
+19 Python tests and 5 Node tests passed locally. Python tests also passed on 3.10.
+Both skill validators passed after adding the references and tools.
+Real Windows `--wifi --vpn` inspection returned successfully, without changing the association or VPN state.
+This verifies command execution, not wireless fault localization or tunnel performance.
+Playwright CLI checked the local TURN page in a real browser using dummy credentials and a closed loopback port:
+fields cleared on Start, Cancel restored controls, and unreachable allocation returned unavailable after the
+bounded window. Deterministic Node tests exercise successful relay candidates, failed setup, timeout and cancellation.
+They assert that output excludes credentials, addresses, SDP and packet-loss fields.
+
+For authenticated live validation, use operator-issued short-lived credentials directly in the local form.
+Verify relay candidate success separately for provider-supported UDP/TCP/TLS URLs, expiry/rejection,
+cancellation and timeout. Then verify actual selected relay/media statistics in the affected application.
+No authenticated live relay success, actual VPN disconnection or wired/Wi-Fi A/B was performed during development.
+Those tests depend on the user's relay/network and explicit approval for connection changes.

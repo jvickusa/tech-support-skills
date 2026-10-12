@@ -35,6 +35,13 @@ address, port, application, or protocol. The collector intentionally creates no 
 `system-dns` uses the OS name service (including caches/hosts files). A literal-IP target performs no hostname
 lookup; its success cannot establish DNS health. Use a relevant hostname to investigate name resolution.
 
+Optional `--wifi`/`--vpn` observations follow the same envelope and remain sensitive local evidence.
+TURN allocation output is a separate version-1 `kind: turn-allocation` record containing only
+`captured_at`, `status` (`observed`, `unavailable`, `cancelled`), `reason`, `relay_candidates`,
+`ice_error_codes` and `duration_seconds`, plus `schema_version`/`kind`.
+This is allocation evidence, not relay media loss or proof of a selected connection.
+Reference it in the human report as method `turn-allocation`, distinct from application/WebRTC statistics.
+
 ## Optional agent-authored summary JSON, version 1
 
 ```json

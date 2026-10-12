@@ -56,6 +56,28 @@ class CollectorTests(unittest.TestCase):
                 self.assertIn("-4", gw)
                 self.assertIn("-6", commands["target-ping"][0])
 
+    def test_optional_wifi_vpn_profiles_are_read_only_and_bounded(self):
+        args = collect.parser().parse_args(["--wifi", "--vpn"])
+        for system in ["Windows", "Darwin", "Linux"]:
+            commands = collect.plan(system, args)
+            ids = [name for name, _, _ in commands]
+            self.assertTrue(any(name.startswith("wifi-") for name in ids))
+            self.assertTrue(any(name.startswith("vpn-") for name in ids))
+            self.assertNotIn("target-ping", ids)
+            for _, argv, timeout in commands:
+                self.assertLessEqual(timeout, collect.INSPECT_TIMEOUT)
+                self.assertNotIn("--show-secrets", argv)
+                self.assertNotIn("--rescan yes", " ".join(argv))
+                self.assertNotIn("Disconnect-Vpn", " ".join(argv))
+            if system == "Linux":
+                cached = next(argv for name, argv, _ in commands if name == "wifi-cached")
+                self.assertEqual(cached[-2:], ["--rescan", "no"])
+
+    def test_profiles_only_when_selected(self):
+        for system in ["Windows", "Darwin", "Linux"]:
+            ids = [name for name, _, _ in collect.plan(system, collect.parser().parse_args([]))]
+            self.assertFalse(any(name.startswith(("wifi-", "vpn-")) for name in ids))
+
     def test_missing_tool(self):
         with patch.object(collect.shutil, "which", return_value=None), patch.object(collect.subprocess, "run") as run:
             result = collect.run("test", ["missing"], 1)
