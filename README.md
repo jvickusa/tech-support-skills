@@ -1,90 +1,91 @@
 # Tech Support Skills
 
-Portable, evidence-based troubleshooting skills. MIT licensed. First skill:
-**internet-diagnostics** for gaming lag, streaming buffering, broken calls, and poor browsing despite good speeds.
+Troubleshooting skills for AI agents, from [whyismyinternetcrap.com](https://whyismyinternetcrap.com).
+Use them to investigate why games lag, streams buffer, or calls freeze—even when a speed test looks good.
 
-Uses the [Agent Skills specification](https://agentskills.io/specification). Each folder under `skills/`
-is independently installable. No agent-specific APIs, accounts, telemetry, or automatic system changes.
+The website checks your connection from the browser. These skills help a compatible agent investigate
+your device and network, explain the evidence, and recommend the next step. You can use them independently
+or give your agent a result from the site. Results are not imported or uploaded automatically.
 
 ## Installation
+
+With [Node.js](https://nodejs.org/) (including npm/npx) and [Git](https://git-scm.com/) installed, run:
+
+```sh
+npx skills add jvickusa/tech-support-skills
+```
+
+The [Skills CLI](https://github.com/vercel-labs/skills) discovers `internet-diagnostics` and installs it
+for your selected agent. Follow any selection and confirmation prompts. Supported agents include Codex
+and Claude Code. By default, installation is scoped to the current project folder.
+
+To make it available across your projects:
+
+```sh
+npx skills add jvickusa/tech-support-skills --global
+```
+
+To select this skill and specific agents explicitly:
+
+```sh
+npx skills add jvickusa/tech-support-skills --skill internet-diagnostics --agent codex claude-code
+```
+
+No Node.js or Git? Use [manual installation](docs/installation.md).
+**Python is not required for guided troubleshooting.** The agent can use commands already available
+on Windows, macOS, or Linux. The optional Python collector batches those checks into a report.
+
+## Use
+
+Open your agent in the folder where you installed the skill and ask:
+
+> Use internet-diagnostics. My game lags when someone uploads, but my speed test looks good.
+> I'm not technical—explain each test and guide me one step at a time.
+
+You can also invoke `$internet-diagnostics` in Codex or `/internet-diagnostics` in Claude Code.
+Refresh or restart your agent if the skill does not appear.
+
+The agent asks about your symptoms, selects checks for your operating system, compares results,
+and writes a troubleshooting report. It distinguishes observed problems from possible causes,
+including what remains unknown. You do not need coding experience to follow its guidance.
+
+## What internet-diagnostics covers
+
+The first skill investigates local connections, Wi-Fi, name resolution (DNS), delay under load,
+VPNs, routing, and problems affecting one application. It supports Windows, macOS, and Linux.
+
+For video calls, it also guides WebRTC/TURN relay troubleshooting. Its optional local browser probe
+checks whether a relay can be allocated; call quality and loss require actual application statistics.
+See the [skill workflow](skills/internet-diagnostics/SKILL.md) or [optional diagnostic tools](docs/tools.md)
+for details. Additional skills will be added when they address a distinct support need.
+
+## Safety and privacy
+
+Checks are read-only by default. The agent explains commands and requires explicit approval before
+changing network settings, disconnecting a VPN, or taking other disruptive actions.
+
+Diagnostic logs stay local unless you choose to share them. They can contain network names and addresses;
+review and redact them first. Never provide passwords, long-term API keys, or VPN credentials.
+The optional TURN probe uses temporary credentials entered directly in its local form.
+The skill adds no telemetry or automatic diagnostic uploads. Your agent and the third-party installer
+have their own data policies.
+
+## Development
+
+To work on the repository, clone it and run the existing tests:
 
 ```sh
 git clone https://github.com/jvickusa/tech-support-skills.git
 cd tech-support-skills
-```
-
-Copy the whole `skills/internet-diagnostics` directory, including scripts and references.
-Review existing installations before replacing them.
-
-| Agent | Personal directory | Project directory | Invoke |
-| --- | --- | --- | --- |
-| Codex | `~/.agents/skills/` | `.agents/skills/` | `$internet-diagnostics` |
-| Claude Code | `~/.claude/skills/` | `.claude/skills/` | `/internet-diagnostics` |
-| Other compatible agents | Agent's documented skill directory | Agent's documented skill directory | Natural-language request or agent command |
-
-macOS/Linux, personal Codex installation:
-
-```sh
-mkdir -p ~/.agents/skills
-cp -R skills/internet-diagnostics ~/.agents/skills/
-```
-
-Windows PowerShell, personal Codex installation:
-
-```powershell
-New-Item -ItemType Directory -Force "$HOME/.agents/skills" | Out-Null
-Copy-Item -Recurse skills/internet-diagnostics "$HOME/.agents/skills/"
-```
-
-For Claude Code replace `.agents` with `.claude`. Refresh/restart the agent if needed.
-See [Codex docs](https://developers.openai.com/codex/skills) and
-[Claude Code docs](https://code.claude.com/docs/en/skills) for discovery details.
-Native command references work without Python. Optional collector requires Python 3.10+.
-Windows can use `py -3`; macOS/Linux can use `python3`.
-
-## Use
-
-Ask: “Use internet-diagnostics. My game lags when someone uploads, but my speed test looks good.”
-The agent scopes symptoms, detects the OS, explains commands, compares evidence, and produces a report.
-Beginners receive one short test at a time. Advanced users can request command batches and JSON.
-
-```sh
-python skills/internet-diagnostics/scripts/collect.py --dry-run
-python skills/internet-diagnostics/scripts/collect.py --wifi --vpn --dry-run
-python skills/internet-diagnostics/scripts/collect.py --format markdown > baseline.md
-python skills/internet-diagnostics/scripts/collect.py --gateway 192.168.1.1 --target example.com --count 20 > evidence.json
-```
-
-Baseline sends no deliberate probes. Target/gateway options add bounded network probes.
-Select the gateway for the target route, not an assumed address. `example.com` illustrates syntax;
-choose a relevant authorized destination. No scanning or bandwidth saturation.
-`--trace` adds a bounded trace; `--family 6` selects IPv6 probes.
-`--dry-run` prints commands without executing them.
-Shell redirection creates files: choose private storage and avoid overwriting evidence.
-**Output is sensitive and unredacted.** Review names, addresses, routes, and Wi-Fi details before sharing.
-Nothing uploads. Collector JSON is local evidence, not a confirmed diagnosis or public share payload.
-
-Wi-Fi and VPN have dedicated workflows and optional `--wifi`/`--vpn` inspection profiles.
-These use current/cached state without active scans, secret collection, or VPN disconnection.
-The [TURN guide](skills/internet-diagnostics/references/turn.md) includes a local browser allocation probe,
-using temporary credentials entered locally and relay-only ICE. It closes after at most 15 seconds.
-It tests allocation only; call quality/loss needs actual connected application statistics.
-No default/deprecated public relay, long-term keys, or new bandwidth/packet-loss engine.
-
-## Development
-
-```sh
 python -m unittest discover -s tests -v
 node --test tests/turn-probe.test.mjs
-python skills/internet-diagnostics/scripts/collect.py --dry-run --target example.com
 ```
 
-CI tests Windows, macOS, and Linux. Tests simulate missing tools, failures, partial output, invalid inputs,
-platform plans, allocation results, cancellation and timeout. Node 22+ is only needed for JS development tests;
-users need an ordinary WebRTC browser for the optional TURN probe.
-See [validation](docs/validation.md) for actual-host limits and manual scenarios.
-Optionally install upstream [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref)
-and run `skills-ref validate skills/internet-diagnostics`.
+Development tests require Python 3.10+ and Node.js 22+. CI runs on Windows, macOS, and Linux.
+See [validation and live-test limits](docs/validation.md) and [design and research foundation](docs/design.md).
+Skills follow the open [Agent Skills specification](https://agentskills.io/specification), with references
+and scripts bundled inside each skill. The installer downloads these skill folders directly from GitHub.
 
-See [design](docs/design.md) for architecture and provenance. Add skills only for distinct demonstrated needs.
-Keep helpers beside their skill; avoid a framework until shared behavior exists.
+## License
+
+[MIT](LICENSE). Each installable skill includes its license.
