@@ -88,7 +88,7 @@ node --test tests/turn-probe.test.mjs
 ```
 
 Development tests require Python 3.10+ and Node.js 22+. CI runs on Windows, macOS, and Linux.
-See [validation and live-test limits](docs/validation.md) and [design and research foundation](docs/design.md).
+See [validation and live-test limits](docs/validation.md).
 Skills follow the open [Agent Skills specification](https://agentskills.io/specification), with references
 and scripts bundled inside each skill. The installer downloads these skill folders directly from GitHub.
 
