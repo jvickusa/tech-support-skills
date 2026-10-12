@@ -3,8 +3,10 @@
 **Illustrative example — fictional readings, not a real diagnosis.** This preview shows how an agent can
 explain an upload-related gaming problem without claiming which device or provider caused it.
 
-**Prepared:** Example report  
-**Investigation window:** Two comparable test windows during a reproduced symptom  
+**Prepared:** Example report
+
+**Investigation window:** Two comparable test windows during a reproduced symptom
+
 **Scope:** One wired device · VPN off · gaming and household uploads
 
 ## What the evidence suggests

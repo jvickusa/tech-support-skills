@@ -2,8 +2,10 @@
 
 {{report_summary}}
 
-**Prepared:** {{prepared_at_with_timezone}}  
-**Investigation window:** {{investigation_window}}  
+**Prepared:** {{prepared_at_with_timezone}}
+
+**Investigation window:** {{investigation_window}}
+
 **Scope:** {{scope}}
 
 ## What the evidence suggests

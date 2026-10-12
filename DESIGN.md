@@ -133,4 +133,3 @@ Native links provide section navigation. Skip link reaches the main report landm
 - Do adapt evidence structure and navigation to the task while keeping observation and interpretation visibly distinct.
 - Don't shrink evidence text to fit tables or omit unknown readings.
 - Don't introduce dashboards, status badges, decorative charts, external assets, or scripted interactions into this reading system.
-
