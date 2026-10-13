@@ -34,8 +34,11 @@ class ReportParser(HTMLParser):
 
 class ReportTests(unittest.TestCase):
     def test_static_offline_html(self):
-        for name in ['report.html', 'report-example.html']:
-            text = (ASSETS / name).read_text(encoding='utf-8')
+        paths = [ASSETS / name for name in ['report.html', 'report-example.html']]
+        paths += [ASSETS.parent.parent / skill / 'assets/report.html'
+                  for skill in ['game-diagnostic', 'game-optimizer']]
+        for path in paths:
+            text = path.read_text(encoding='utf-8')
             parsed = ReportParser()
             parsed.feed(text)
             self.assertFalse(set(parsed.tags) & {'script', 'iframe', 'object', 'embed', 'form'})

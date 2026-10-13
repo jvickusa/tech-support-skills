@@ -177,7 +177,9 @@ class PackagingTests(unittest.TestCase):
                         self.assertTrue((path.parent / destination.split("#")[0]).exists())
 
     def test_standalone_skill_preserves_mit_license(self):
-        self.assertEqual((ROOT / "LICENSE").read_bytes(), (ROOT / "skills/internet-diagnostics/LICENSE").read_bytes())
+        for skill in ["internet-diagnostics", "game-diagnostic", "game-optimizer"]:
+            with self.subTest(skill=skill):
+                self.assertEqual((ROOT / "LICENSE").read_bytes(), (ROOT / "skills" / skill / "LICENSE").read_bytes())
 
 
 if __name__ == "__main__":

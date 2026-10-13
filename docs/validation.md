@@ -1,5 +1,7 @@
 # Validation
 
+Gaming skills: see [packaging limits and behavioral acceptance](game-validation.md).
+
 Run `python -m unittest discover -s tests -v` from repository root.
 CI covers Python 3.10 and 3.14 on Windows, macOS and Linux, including local baseline execution.
 Baseline output is discarded, not uploaded as an artifact. Mocked command tests check flags and failure handling;

@@ -1,10 +1,10 @@
 # Tech Support Skills
 
 Troubleshooting skills for AI agents, from [whyismyinternetcrap.com](https://whyismyinternetcrap.com).
-Use them to investigate why games lag, streams buffer, or calls freeze—even when a speed test looks good.
+Use them to investigate connection problems, diagnose game performance, and test evidence-backed optimizations.
 
 The website checks your connection from the browser. These skills help a compatible agent investigate
-your device and network, explain the evidence, and recommend the next step. You can use them independently
+your device, game and network, explain the evidence, and recommend the next step. You can use them independently
 or give your agent a result from the site. Results are not imported or uploaded automatically.
 
 ## Installation
@@ -15,7 +15,7 @@ With [Node.js](https://nodejs.org/) (including npm/npx) and [Git](https://git-sc
 npx skills add jvickusa/tech-support-skills
 ```
 
-The [Skills CLI](https://github.com/vercel-labs/skills) discovers `internet-diagnostics` and installs it
+The [Skills CLI](https://github.com/vercel-labs/skills) discovers all three skills and installs your selection
 for your selected agent. Follow any selection and confirmation prompts. Supported agents include Codex
 and Claude Code. By default, installation is scoped to the current project folder.
 
@@ -30,6 +30,8 @@ To select this skill and specific agents explicitly:
 ```sh
 npx skills add jvickusa/tech-support-skills --skill internet-diagnostics --agent codex claude-code
 ```
+
+Replace `internet-diagnostics` with `game-diagnostic` or `game-optimizer` to select a gaming skill.
 
 No Node.js or Git? Use [manual installation](docs/installation.md).
 **Python is not required for guided troubleshooting.** The agent can use commands already available
@@ -55,6 +57,26 @@ in a browser, without Python, Node.js or a server. Use the browser's Print / Sav
 See [fictional Markdown preview](skills/internet-diagnostics/assets/report-example.md) or download and open
 the [standalone HTML preview](skills/internet-diagnostics/assets/report-example.html).
 
+## Available skills
+
+| Skill | Use it for |
+| --- | --- |
+| [internet-diagnostics](skills/internet-diagnostics/SKILL.md) | Wi-Fi, DNS, VPN, congestion, buffering, calls and connection problems |
+| [game-diagnostic](skills/game-diagnostic/SKILL.md) | Low FPS, stutter, input delay, rubber-banding, crashes and loading stalls; read-only evidence first |
+| [game-optimizer](skills/game-optimizer/SKILL.md) | One authorized, reversible, evidence-backed experiment at a time; matched benchmarks and rollback decisions |
+
+Gaming skills support Windows, macOS and Linux, require no Python for guided use, and include their own
+workflow references and offline report templates. Optional capture tools are not installed automatically.
+
+> Use game-diagnostic. My game starts stuttering after ten minutes. Start read-only, help me reproduce it,
+> and compare frame timing with relevant CPU, GPU, memory, storage and power evidence.
+
+> Use game-optimizer with my diagnostic findings. Help me improve frame pacing while preserving image quality.
+> Prepare one experiment with its baseline, side effects and rollback, then ask before changing settings.
+
+Invoke `$game-diagnostic` or `$game-optimizer` in Codex, or the corresponding slash command in Claude Code.
+The optimizer establishes a baseline when no diagnostic report exists; it does not require another installed skill.
+
 ## What internet-diagnostics covers
 
 The first skill investigates local connections, Wi-Fi, name resolution (DNS), delay under load,
@@ -63,7 +85,7 @@ VPNs, routing, and problems affecting one application. It supports Windows, macO
 For video calls, it also guides WebRTC/TURN relay troubleshooting. Its optional local browser probe
 checks whether a relay can be allocated; call quality and loss require actual application statistics.
 See the [skill workflow](skills/internet-diagnostics/SKILL.md) or [optional diagnostic tools](docs/tools.md)
-for details. Additional skills will be added when they address a distinct support need.
+for details. Gaming skills distinguish game rendering/resource constraints from network symptoms.
 
 ## Safety and privacy
 

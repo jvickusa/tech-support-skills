@@ -9,7 +9,8 @@ Or, if Git is installed:
 git clone https://github.com/jvickusa/tech-support-skills.git
 ```
 
-Copy the **whole** `skills/internet-diagnostics` folder, including `references`, `scripts`, and `LICENSE`.
+Choose `internet-diagnostics`, `game-diagnostic`, or `game-optimizer`. Copy the **whole** corresponding folder
+under `skills/`, including references, assets, license and any scripts. Each skill installs independently.
 Review any existing installation before replacing it.
 
 | Agent | Personal destination | Project destination |
@@ -19,6 +20,7 @@ Review any existing installation before replacing it.
 | Other compatible agents | Agent's documented skills directory | Agent's documented skills directory |
 
 `~` means your home folder. Personal installations work across projects; project installations work in that folder.
+Replace `internet-diagnostics` in destination paths and examples with the chosen skill name.
 
 From the extracted repository, macOS/Linux personal Codex installation:
 

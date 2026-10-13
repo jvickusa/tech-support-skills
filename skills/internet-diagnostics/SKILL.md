@@ -30,6 +30,9 @@ baseline inspection requires no elevation.
    device/service scope, Wi-Fi/Ethernet, VPN/proxy, load correlation, local/remote session, preferred detail level.
    Beginners get one actionable test and a plain-language explanation. Check render/frame-rate stalls and
    service status when one app fails; not every freeze is network lag.
+   For game rendering, thermal, storage or crash symptoms, use `game-diagnostic` if installed;
+   otherwise establish game-local evidence before continuing network tests. `game-optimizer` handles
+   evidence-backed game tuning, not generic network tweaks.
 2. **Detect:** identify the user's OS and shell, not the agent's host when supporting someone remotely.
    Load only [Windows](references/windows.md), [macOS](references/macos.md), or [Linux](references/linux.md).
    Feature-detect tools; use manual commands if Python is absent. Missing/denied inspection stays unavailable.
