@@ -1,11 +1,11 @@
 # Tech Support Skills
 
-Troubleshooting skills for AI agents, from [whyismyinternetcrap.com](https://whyismyinternetcrap.com).
-Use them to investigate connection problems, diagnose game performance, and test evidence-backed optimizations.
+Open-source Agent Skills for PC troubleshooting in Codex, Claude Code and other compatible agents.
+Investigate Wi-Fi drops, frozen calls or game stutter on Windows, macOS and Linux. Start with read-only
+checks, compare evidence and ask the agent for an offline report.
 
-The website checks your connection from the browser. These skills help a compatible agent investigate
-your device, game and network, explain the evidence, and recommend the next step. You can use them independently
-or give your agent a result from the site. Results are not imported or uploaded automatically.
+See a [fictional diagnostics report](skills/internet-diagnostics/assets/report-example.md) or
+[browse the Skills.sh listing](https://skills.sh/jvickusa/tech-support-skills).
 
 ## Installation
 
@@ -18,6 +18,10 @@ npx skills add jvickusa/tech-support-skills
 The [Skills CLI](https://github.com/vercel-labs/skills) discovers all three skills and installs your selection
 for your selected agent. Follow any selection and confirmation prompts. Supported agents include Codex
 and Claude Code. By default, installation is scoped to the current project folder.
+
+Add `--list` to preview available skills without installing. Review the skill and its bundled scripts
+before granting an agent shell access. The CLI supports opting out of its aggregate install telemetry
+with `DISABLE_TELEMETRY=1`. See the [Skills CLI documentation](https://www.skills.sh/docs/cli).
 
 To make it available across your projects:
 
@@ -86,6 +90,13 @@ For video calls, it also guides WebRTC/TURN relay troubleshooting. Its optional 
 checks whether a relay can be allocated; call quality and loss require actual application statistics.
 See the [skill workflow](skills/internet-diagnostics/SKILL.md) or [optional diagnostic tools](docs/tools.md)
 for details. Gaming skills distinguish game rendering/resource constraints from network symptoms.
+
+For a guided browser check, use [Why Is My Internet Crap?](https://whyismyinternetcrap.com/check).
+The [PC Help handoff](https://whyismyinternetcrap.com/pc-help) shows which readings to copy into your agent
+and what to leave private. For a brief Windows interruption, start with the
+[timestamp worksheet](https://whyismyinternetcrap.com/guides/windows-internet-drops).
+The [isolated upload study](https://whyismyinternetcrap.com/stories/latency-under-upload) shows why
+comparing idle, upload and recovery can help. Site results are shared with the agent only when you copy them.
 
 ## Safety and privacy
 
